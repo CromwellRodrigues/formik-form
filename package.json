@@ -13,6 +13,8 @@
     "next": "14.2.13",
     "react": "^18",
     "react-dom": "^18",
+    "react-toastify": "^10.0.5",
+    "sonner": "^1.5.0",
     "styled-components": "^6.1.13",
     "yup": "^1.4.0"
   },

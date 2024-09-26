@@ -7,7 +7,7 @@ import { signupSchema } from '../Schema/index';
 import "./App.module.css"
 
 import styled from 'styled-components';
-
+import { toast, Toaster } from 'sonner';
 
 
 // Define the styled components
@@ -64,36 +64,28 @@ const SubmitButton = styled.button`
 `;
 
 
-
-        
 const CategoryDropdown = ({ field }) => {
   const options = [
-        {
-            value: "fruit",
-            label: "Fruit"
-        },
-        {
-            value: "vegetable",
-            label: "Vegetable"
-        },
-        {
-            value: "dairy",
-            label: "Dairy"
-        },
-        {
-            value: "meat",
-            label: "Meat"
-        },
-        {
-            value: "bakery",
-            label: "Bakery"
-        },
-        {
-            value: "produce",
-            label: "Produce"
-        }
-    ]
-}
+    { value: "fruit", label: "Fruit" },
+    { value: "vegetable", label: "Vegetable" },
+    { value: "dairy", label: "Dairy" },
+    { value: "meat", label: "Meat" },
+    { value: "bakery", label: "Bakery" },
+    { value: "produce", label: "Produce" }
+  ];
+
+  return (
+    <select {...field}>
+      {options.map(option => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
+  );
+};
+        
+
 
 
 const initialValues = {
@@ -103,12 +95,26 @@ const initialValues = {
     quantity: "",
 
 }
+
+
+const getCurrentDate = () => {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const dd = String(today.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+};
+
+
 const App = () => {
 
+    const notify= () => toast.success("Item added successfully!");
 
     const onSubmit=(values, actions) => {
         console.log(values);
+        notify();
         actions.resetForm();
+        
     
     }
 
@@ -119,6 +125,8 @@ const App = () => {
 
         <Container>
        
+            <Toaster />
+            
             <Formik initialValues={initialValues} validationSchema={signupSchema} onSubmit={onSubmit}>
 
 
@@ -162,7 +170,7 @@ const App = () => {
 
                         {/* item expiry date and error message */}
                         <StyledLabel htmlFor="expiry_date">Expiry Date:</StyledLabel>
-                        <StyledField type="date" id="expiry_date" name="expiry_date" />
+                        <StyledField type="date" id="expiry_date" name="expiry_date" min={getCurrentDate()} />
                         
                         <ErrorContainer>
                         {touched.expiry_date && errors.expiry_date && (
@@ -189,4 +197,3 @@ const App = () => {
 };
 
 export default App;
-
