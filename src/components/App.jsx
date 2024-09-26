@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, handleChange, handleBlur } from 'formik';
 
 import { signupSchema } from '../Schema/index';
 
@@ -43,6 +43,14 @@ const StyledField = styled(Field)`
   border-radius: 5px;
 `;
 
+const StyledCategoryInput = styled.select`
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  // Add any other styles you want to apply to the input
+`;
+
 const ErrorContainer = styled.div`
   margin-bottom: 15px;
   color: red;
@@ -63,28 +71,6 @@ const SubmitButton = styled.button`
   }
 `;
 
-
-const CategoryDropdown = ({ field }) => {
-  const options = [
-    { value: "fruit", label: "Fruit" },
-    { value: "vegetable", label: "Vegetable" },
-    { value: "dairy", label: "Dairy" },
-    { value: "meat", label: "Meat" },
-    { value: "bakery", label: "Bakery" },
-    { value: "produce", label: "Produce" }
-  ];
-
-  return (
-    <select {...field}>
-      {options.map(option => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </select>
-  );
-};
-        
 
 
 
@@ -118,6 +104,9 @@ const App = () => {
     
     }
 
+      const handleCategoryChange = (event) => {
+    console.log(event.target.value);
+  };
 
 
     return (
@@ -136,7 +125,7 @@ const App = () => {
                         
                         {/* item name entry and error message */}
                         <StyledLabel htmlFor="name">Name:</StyledLabel>
-                        <Field type="text" id="name" name="name" placeholder="Enter product name" />
+                        <StyledField type="text" id="name" name="name" placeholder="Enter product name" />
             
                         <ErrorContainer>
                         {touched.name && errors.name && (
@@ -155,18 +144,29 @@ const App = () => {
                         </ErrorContainer>
 
 
-                        {/* item category and error message */}
-                      
-                        <StyledLabel htmlFor="category">Category:</StyledLabel>
-                         <StyledField type="text" id="category" name="category" placeholder="Enter a category" />
+    
+                          {/* item CATEGORY and error message */}
+            
+          
+                        <StyledLabel htmlFor="category">Select a category:</StyledLabel>
                         
+                    {/* <StyledCategoryInput> */}
+                        <Field as="select" name="category" id="category" style={{ display: "block" }}>
+                        <option value="" label="Select a category">Select a category</option>
+                        <option value="fruits" label="Fruits">Fruits</option>
+                        <option value="vegetables" label="Vegetables">Vegetables</option>
+                        <option value="dairy" label="Dairy">Dairy</option>
+                        <option value="meat" label="Meat">Meat</option>
+                        <option value="baking" label="Baking">Baking</option>
+                        <option value="snacks" label="Snacks">Snacks</option>
+                        <option value="other" label="Other">Other</option>
+                        </Field>
+                    {/* </StyledCategoryInput> */}
 
                         <ErrorContainer>
-                        {touched.category && errors.category && (
-                            <p className="form_error">{errors.category}</p>)}
+                        {touched.category && errors.category && <p className="form_error">{errors.category}</p>}
                         </ErrorContainer>
-                        <div className="error_container"></div>
-
+                        
 
                         {/* item expiry date and error message */}
                         <StyledLabel htmlFor="expiry_date">Expiry Date:</StyledLabel>

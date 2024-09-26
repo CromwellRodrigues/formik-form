@@ -31,18 +31,7 @@ export const signupSchema = Yup.object().shape({
     
 
     category: Yup.string()
-         .transform(value => {
-            if (value) {
-                return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
-            }
-            return value;
-        })
-        
-       
-        .min(3)
-        .max(15)
-        .matches(textPattern, 'Category can only contain letters')
-        .required('Category is required'),
+         .required('Category is required'),
     
     
     
