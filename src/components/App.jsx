@@ -129,21 +129,16 @@ const App = () => {
     const notify= (name) => toast.success(`${name} added successfully!`);
 
   const onSubmit = (values, actions) => {
-    console.log(values);
-    values.name = values.name.trim();
-    console.log("from app.js renoving trailing and capitalised :", name);
-    console.log(values.name);
-    
-    notify(values.name);
-    console.log("from app.js :", values.name)
-    console.log(values)
-        actions.resetForm();
+      values.name = values.name.trim();
+      notify(values.name);
+      console.log(values)
+      actions.resetForm();
         
     
     }
 
       const handleCategoryChange = (event) => {
-    console.log(event.target.value);
+      console.log(event.target.value);
   };
 
 

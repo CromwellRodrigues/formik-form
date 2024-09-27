@@ -8,10 +8,8 @@ export const signupSchema = Yup.object().shape({
   name: Yup.string()
     .transform(value => {
         if (value) {
-            console.log("from schmea input :", value);
             const trimmedValue = value.trim();
-            console.log("from schema after trim :", trimmedValue);
-        return trimmedValue.charAt(0).toUpperCase() + trimmedValue.slice(1).toLowerCase();
+            return trimmedValue.charAt(0).toUpperCase() + trimmedValue.slice(1).toLowerCase();
         }
         return value;
     })
