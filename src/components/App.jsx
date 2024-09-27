@@ -4,6 +4,7 @@ import { Formik, Form, Field, handleChange, handleBlur } from 'formik';
 
 import { signupSchema } from '../Schema/index';
 
+
 import "./App.module.css"
 
 import styled from 'styled-components';
@@ -11,6 +12,8 @@ import { toast, Toaster } from 'sonner';
 
 
 // Define the styled components
+
+
 
 const Container = styled.div`
   display: flex;
@@ -30,6 +33,14 @@ const StyledForm = styled(Form)`
   border-radius: 5px;
   background-color: #f9f9f9;
 `;
+
+
+const ButtonsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+`;
+
 
 const StyledLabel = styled.label`
   margin-bottom: 5px;
@@ -54,6 +65,21 @@ const StyledCategoryInput = styled.select`
 const ErrorContainer = styled.div`
   margin-bottom: 15px;
   color: red;
+`;
+
+const DeleteButton = styled.button`
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: red;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -92,13 +118,25 @@ const getCurrentDate = () => {
 };
 
 
+const capitalizeName = (name) => {
+  if (!name) return '';
+  return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+};
+
 const App = () => {
 
-    const notify= () => toast.success("Item added successfully!");
 
-    const onSubmit=(values, actions) => {
-        console.log(values);
-        notify();
+    const notify= (name) => toast.success(`${name} added successfully!`);
+
+  const onSubmit = (values, actions) => {
+    console.log(values);
+    values.name = values.name.trim();
+    console.log("from app.js renoving trailing and capitalised :", name);
+    console.log(values.name);
+    
+    notify(values.name);
+    console.log("from app.js :", values.name)
+    console.log(values)
         actions.resetForm();
         
     
@@ -112,14 +150,18 @@ const App = () => {
     return (
 
 
-        <Container>
+      <Container>
+        
+          <div>
        
-            <Toaster />
-            
+            <Toaster richColors />
+        </div>
+        
+
             <Formik initialValues={initialValues} validationSchema={signupSchema} onSubmit={onSubmit}>
 
 
-                {({ errors, touched }) => (
+                {({ errors, touched, isValid }) => (
 
                     <StyledForm>
                         
@@ -178,9 +220,14 @@ const App = () => {
                         </ErrorContainer>
 
 
+                           {/* Buttons Container
+            <ButtonsContainer>
+              <DeleteButton type="button" onClick={() => console.log('Delete clicked')}>Delete</DeleteButton>
+              <SubmitButton type="submit" disabled={!isValid}>Submit</SubmitButton>
+            </ButtonsContainer>
+           */}
 
-
-                        <SubmitButton type="submit">
+              <SubmitButton type="submit" >
                             Submit
                         </SubmitButton>
             
